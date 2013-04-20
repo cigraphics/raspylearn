@@ -26,8 +26,14 @@ class MainWindow(QtGui.QMainWindow):
         hbox.addWidget(editor)
 
         self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
-        self.draw.add_object(Circle(50, 50, 90, (0, 200, 0)))
-        self.draw.add_object(Image(100, 100, 90, 110, "images/rasp_logo.png"))
+        self.draw.add_object(Elipse(10, 50, 90, 90, (0, 200, 0)))
+        self.draw.add_object(Image(10, 100, 90, 110, "images/rasp_logo.png"))
+
+        li = [Image(0, 200, 90, 110, "images/rasp_logo.png") for i in range(15)]
+        place_object_list(li, 400)
+
+        for obj in li:
+            self.draw.add_object(obj)
 
         self.level = MinNumber(self.draw)
         editor.on_execute.connect(self.start_level)

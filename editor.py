@@ -18,10 +18,11 @@ class Editor(QtGui.QWidget):
         self.layout().addWidget(self.text_area)
         self.layout().addWidget(button)
 
-        self.on_execute = QtCore.SIGNAL("on_execute(1)")
+        self.on_execute = QtCore.pyqtSignal(object)
 
         # connect run button
         button.clicked.connect(self.runPressed)
+        print button.clicked.__class__
 
     def runPressed(self):
         print "run pressed."
@@ -30,7 +31,7 @@ class Editor(QtGui.QWidget):
         namespace = {}
         exec text in namespace
 
-        self.emit(QtCore.SIGNAL("on_execute(1)"), namespace)
+        self.on_execute.emit(namespace)
         sys.stdout.flush()
 
 

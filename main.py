@@ -9,12 +9,55 @@ from level import MinNumber
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self._setup()
+
+        # Main widgets for window.
+        self.initial_menu_widget = QtGui.QWidget()
+        self.level_widget = QtGui.QWidget()
+
+        self.draw_initial_menu()
+
+        self.show()
+
+    def _setup(self):
+        self.setWindowTitle('RPI Learn you programming')
+
+    def get_levels(self):
+        """Get all level names available for one to play."""
+        return [('level1', 'desc1'), ('level2', 'desc2'), ('level3', 'desc2')]
+
+    def draw_initial_menu(self):
+        self.setCentralWidget(self.initial_menu_widget)
+
+        layout = QtGui.QVBoxLayout()
+        #layout.addStretch(1)
+
+        # Draw initial choices for use to choose from.
+        for level, desc in self.get_levels():
+            inside_layout = QtGui.QVBoxLayout()
+
+            button = QtGui.QPushButton(level)
+            button.clicked.connect(self.selectLevel)
+            inside_layout.addWidget(button)
+            label = QtGui.QLabel(desc)
+            inside_layout.addWidget(label)
+
+            layout.addLayout(inside_layout)
+
+        self.initial_menu_widget.setLayout(layout)
+
+    def selectLevel(self):
+        self.initial_menu_widget.close()
+        self.draw_level()
+        sender = self.sender()
+        print(sender.text())
+
+    def draw_level(self):
         self.setGeometry(300, 300, 800, 600)
-        self.setWindowTitle('Brushes')
-        self.central_widget = QtGui.QWidget()
+        self.setCentralWidget(self.level_widget)
 
         hbox = QtGui.QHBoxLayout()
-        self.central_widget.setLayout(hbox)
+        self.level_widget.setLayout(hbox)
 
         #draw area
         self.draw = DrawArea()
@@ -35,17 +78,13 @@ class MainWindow(QtGui.QMainWindow):
         for obj in li:
             self.draw.add_object(obj)
 
-
         level = MinNumber(self.draw, self.editor)
         self.editor.on_execute.connect(self.start_level)
-        self.setCentralWidget(self.central_widget)
-        self.show()
 
     def start_level(self, ns):
         level = MinNumber(self.draw, self.editor, False)
         level.set_method(ns[level.method_name])
         level.start()
-
 
 class DrawArea(QtGui.QWidget):
     def __init__(self):

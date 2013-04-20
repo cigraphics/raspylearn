@@ -77,4 +77,4 @@ class MinNumber(Level):
             for o in self.objects:
                 o.color = color
 
- 
+classes = [ MinNumber ]

@@ -29,11 +29,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def _get_all_classes(self, module):
         """Get all classes within a module."""
-        classes = []
-        for name, obj in inspect.getmembers(module):
-            if inspect.isclass(obj):
-                classes.append(obj)
-        return classes
+        return module.classes
 
     def draw_initial_menu(self):
         self.setCentralWidget(self.initial_menu_widget)

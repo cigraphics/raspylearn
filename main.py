@@ -29,7 +29,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def draw_initial_menu(self):
         self.setMinimumSize(0, 0)
-        self.setGeometry(0, 0, 300, 600)
+        self.setGeometry(0, 0, 300, 400)
         self.initial_menu_widget = QtGui.QWidget(self)
 
         self.setCentralWidget(self.initial_menu_widget)
@@ -81,29 +81,16 @@ class MainWindow(QtGui.QMainWindow):
         back_button = QtGui.QPushButton("< Back", self)
         back_button.clicked.connect(self.draw_initial_menu)
 
-        hbox.addWidget(back_button)
-        hbox.addWidget(self.draw)
+        container = QtGui.QWidget()
+        container.setLayout(QtGui.QVBoxLayout())
+
+        container.layout().addWidget(self.draw)
+        container.layout().addWidget(back_button)
+
+        hbox.addWidget(container)
         hbox.addWidget(self.editor)
 
         grid = Grid(6, 4, 500, 500)
-
-        self.draw.add_object(Elipse(grid, 0, 0, (0, 200, 0), 50))
-        self.draw.add_object(Elipse(grid, 0, 1, (0, 200, 0), 10))
-        self.draw.add_object(Elipse(grid, 1, 0, (0, 200, 0), 50))
-        self.draw.add_object(Elipse(grid, 1, 1, (0, 200, 0), 10))
-
-        self.draw.add_object(Image(grid, 0, 2, "images/rasp_logo.png", 70, 0.8))
-        self.draw.add_object(Image(grid, 1, 2, "images/rasp_logo.png", 70, 0.8))
-        self.draw.add_object(Image(grid, 0, 3, "images/rasp_logo.png", 70, 0.8))
-        self.draw.add_object(Image(grid, 1, 3, "images/rasp_logo.png", 70, 0.8))
-
-        self.draw.add_object(Image(grid, 2, 0, "images/tree.png", 100, 0.8))
-        self.draw.add_object(Image(grid, 2, 1, "images/tree.png", 100, 0.8))
-        self.draw.add_object(Image(grid, 3, 0, "images/tree.png", 100, 0.8))
-        self.draw.add_object(Image(grid, 3, 1, "images/tree.png", 100, 0.8))
-
-        self.draw.add_object(Rect(grid, 4, 0, (0, 200, 0), 50))
-        self.draw.add_object(Rect(grid, 4, 1, (0, 200, 0), 50))
 
         # Save the level class (e.g. MinNumber class level)
         # to use it to run the level selected by the user.

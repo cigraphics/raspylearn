@@ -2,7 +2,13 @@ from widgets import *
 from threading import Thread
 import time
 
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+
 class Level(Thread):
+    class SignalHandler(QtGui.QWidget):
+        on_exception_raised = QtCore.pyqtSignal(str)
+
     def __init__(self, draw_area, editor, load_skel=True):
         super(Level, self).__init__()
         self.draw_area = draw_area
@@ -10,9 +16,14 @@ class Level(Thread):
         if load_skel:
             self.load_skel()
 
-        #Ugly callback so connect will work
-        def reload():
-            self.load_skel()
+        # can't inherit QWidget so hack this m0f0
+        self.signal_handler = self.SignalHandler()
+        self.signal_handler.on_exception_raised.connect(editor.console_write,\
+                            Qt.QueuedConnection)
+
+    #Ugly callback so connect will work
+    def reload():
+        self.load_skel()
 
         self.editor.reload_button.clicked.connect(reload)
 
@@ -38,7 +49,11 @@ class Level(Thread):
 
     def run(self):
         self.draw_area.update()
-        self.check()
+        try:
+            self.check()
+        except Exception as e:
+            self.signal_handler.on_exception_raised.emit(str(e))
+
         self.draw_area.update()
         time.sleep(1)
         self.init()

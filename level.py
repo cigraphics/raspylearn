@@ -1,6 +1,7 @@
 from widgets import *
 from threading import Thread
 import time
+import json
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -69,10 +70,10 @@ class MinNumber(Level):
     def add_objects(self):
         self.values = {}
 
-        grid = Grid(2, 1, 400, 600)
+        grid = Grid(2, 3, 500, 500)
 
-        o1 = Image(grid, 0, 0, "images/rasp_logo.png", 30, 0.8)
-        o2 = Image(grid, 1, 0, "images/rasp_logo.png", 70, 0.8)
+        o1 = Image(grid, 0, 1, "images/rasp_logo.png", 30, 1.2)
+        o2 = Image(grid, 1, 1, "images/rasp_logo.png", 70, 1.2)
 
         self.values[o1] = o1.fill;
         self.values[o2] = o2.fill;
@@ -100,13 +101,13 @@ class MinNumberList(Level):
     skel = "skel/min_list.py"
 
     def add_objects(self):
-        grid = Grid(6, 1, 400, 600)
+        grid = Grid(6, 5, 500, 500)
 
         self.vals = [4, 8, 6, 3, 5, 7]
         images = ["images/rasp_logo.png"] * len(self.vals)
 
         for i in range(len(self.vals)):
-            obj = Image(grid, i, 0, images[i], self.vals[i] * 10, 0.3)
+            obj = Image(grid, i, 2, images[i], self.vals[i] * 10, 0.8)
             self.objects.append(obj)
             self.draw_area.add_object(obj)
 
@@ -120,4 +121,31 @@ class MinNumberList(Level):
             for o in self.objects:
                 o.highlight_incorrect()
 
-classes = [ MinNumber, MinNumberList ]
+class BreadthFirstSearch(Level):
+    """Find the minimum from a list of numbers."""
+
+    method_name = "bfs"
+    name = "BreadthFirstSearch"
+    skel = "skel/bfs.py"
+
+    def add_objects(self):
+        stuff = json.load(open("levels/bfs.json", "r"))
+
+        matrix = stuff["matrix"]
+
+        grid = Grid(len(matrix), len(matrix[0]), 500, 500)
+
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if (matrix[i][j] == 0):
+                    continue
+
+                obj = Image(grid, i, j, stuff[str(matrix[i][j])], 100, 0.8)
+                self.objects.append(obj)
+                self.draw_area.add_object(obj)
+
+
+    def check(self):
+        pass
+
+classes = [ MinNumber, MinNumberList, BreadthFirstSearch ]

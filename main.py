@@ -64,7 +64,7 @@ class MainWindow(QtGui.QMainWindow):
         self.draw_level(level_class)
 
     def draw_level(self, level_class):
-        self.setGeometry(300, 300, 800, 600)
+        self.setGeometry(100, 100, 1024, 600)
         self.setCentralWidget(self.level_widget)
 
         hbox = QtGui.QHBoxLayout()
@@ -79,7 +79,7 @@ class MainWindow(QtGui.QMainWindow):
         hbox.addWidget(self.draw)
         hbox.addWidget(self.editor)
 
-        grid = Grid(6, 4, 400, 600)
+        grid = Grid(6, 4, 500, 500)
 
         self.draw.add_object(Elipse(grid, 0, 0, (0, 200, 0), 50))
         self.draw.add_object(Elipse(grid, 0, 1, (0, 200, 0), 10))
@@ -113,7 +113,7 @@ class MainWindow(QtGui.QMainWindow):
 class DrawArea(QtGui.QWidget):
     def __init__(self):
         super(DrawArea, self).__init__()
-        self.setMinimumSize(400, 600)
+        self.setMinimumSize(500, 500)
         self.objects = []
 
     def add_object(self, obj):

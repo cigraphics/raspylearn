@@ -3,10 +3,20 @@ from threading import Thread
 import time
 
 class Level(Thread):
-    def __init__(self, draw_area):
+    def __init__(self, draw_area, editor, load_skel=True):
         super(Level, self).__init__()
         self.draw_area = draw_area
+        self.editor = editor
+        if load_skel:
+            self.load_skel()
+
+        self.editor.reload_button.clicked.connect(self.load_skel)
+
         self.init()
+
+    def load_skel(self):
+        skel = open(self.skel, "r").read()
+        self.editor.text_area.setPlainText(skel)
 
     def init(self):
         self.draw_area.clear()
@@ -33,6 +43,7 @@ class Level(Thread):
 class MinNumber(Level):
     method_name = "min"
     name = "MinNumber"
+    skel = "skel/min.py"
     def add_objects(self):
         self.values = {}
         o1 = Rect(100, 50, 200, 200, (0, 200, 100))
@@ -49,6 +60,7 @@ class MinNumber(Level):
 
     def check(self):
         x = self.method(self.values[self.objects[0]], self.values[self.objects[1]])
+
         if x == 3:
             self.objects[0].color = (0, 255, 0)
         else:

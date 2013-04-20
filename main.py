@@ -20,10 +20,10 @@ class MainWindow(QtGui.QMainWindow):
         self.draw = DrawArea()
 
         #text area container
-        editor = Editor()
+        self.editor = Editor()
 
         hbox.addWidget(self.draw)
-        hbox.addWidget(editor)
+        hbox.addWidget(self.editor)
 
         self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
         self.draw.add_object(Elipse(10, 50, 90, 90, (0, 200, 0)))
@@ -36,13 +36,13 @@ class MainWindow(QtGui.QMainWindow):
             self.draw.add_object(obj)
 
 
-        level = MinNumber(self.draw)
-        editor.on_execute.connect(self.start_level)
+        level = MinNumber(self.draw, self.editor)
+        self.editor.on_execute.connect(self.start_level)
         self.setCentralWidget(self.central_widget)
         self.show()
 
     def start_level(self, ns):
-        level = MinNumber(self.draw)
+        level = MinNumber(self.draw, self.editor, False)
         level.set_method(ns[level.method_name])
         level.start()
 

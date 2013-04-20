@@ -14,16 +14,16 @@ class Editor(QtGui.QWidget):
         self.text_area = QtGui.QPlainTextEdit()
         PythonHighlighter(self.text_area.document())
 
-        button = QtGui.QPushButton("Run")
+        run_button = QtGui.QPushButton("Run")
+        self.reload_button = QtGui.QPushButton("Reload")
 
         self.layout().addWidget(label)
         self.layout().addWidget(self.text_area)
-        self.layout().addWidget(button)
-
+        self.layout().addWidget(run_button)
+        self.layout().addWidget(self.reload_button)
 
         # connect run button
-        button.clicked.connect(self.runPressed)
-        print button.clicked.__class__
+        run_button.clicked.connect(self.runPressed)
 
     def runPressed(self):
         print "run pressed."

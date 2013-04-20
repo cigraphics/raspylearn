@@ -16,10 +16,6 @@ class MainWindow(QtGui.QMainWindow):
         # { level_class_name : level_class }.
         self.levels_dict = {}
 
-        # Main widgets for window.
-        self.initial_menu_widget = QtGui.QWidget()
-        self.level_widget = QtGui.QWidget()
-
         self.draw_initial_menu()
 
         self.show()
@@ -32,8 +28,12 @@ class MainWindow(QtGui.QMainWindow):
         return module.classes
 
     def draw_initial_menu(self):
-        self.setCentralWidget(self.initial_menu_widget)
+        self.setMinimumSize(0, 0)
+        self.setGeometry(0, 0, 300, 600)
+        self.initial_menu_widget = QtGui.QWidget(self)
 
+        self.setCentralWidget(self.initial_menu_widget)
+        # Show the level selection, not a specific level.
         layout = QtGui.QVBoxLayout()
 
         # Draw initial choices for use to choose from.
@@ -55,8 +55,7 @@ class MainWindow(QtGui.QMainWindow):
         self.initial_menu_widget.setLayout(layout)
 
     def select_level(self):
-        # Close initial menu widget, and show the selected level instead.
-        self.initial_menu_widget.close()
+        # Switch to a selected level.
         sender_name = str(self.sender().text())
         # Get the level class which was selected by the user.
         level_class = self.levels_dict.get(sender_name)
@@ -65,6 +64,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def draw_level(self, level_class):
         self.setGeometry(100, 100, 1024, 600)
+        self.level_widget = QtGui.QWidget(self)
+
         self.setCentralWidget(self.level_widget)
 
         hbox = QtGui.QHBoxLayout()
@@ -76,6 +77,11 @@ class MainWindow(QtGui.QMainWindow):
         #text area container
         self.editor = Editor()
 
+        # Add a back button
+        back_button = QtGui.QPushButton("< Back", self)
+        back_button.clicked.connect(self.draw_initial_menu)
+
+        hbox.addWidget(back_button)
         hbox.addWidget(self.draw)
         hbox.addWidget(self.editor)
 

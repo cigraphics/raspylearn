@@ -50,8 +50,11 @@ class MinNumber(Level):
     skel = "skel/min.py"
     def add_objects(self):
         self.values = {}
-        o1 = Rect(100, 50, 200, 200, (0, 200, 100))
-        o2 = Rect(100, 300, 200, 200, (0, 200, 100))
+
+        grid = Grid(2, 1, 400, 600)
+
+        o1 = Rect(grid, 0, 0, (0, 200, 0), 50)
+        o2 = Rect(grid, 1, 0, (0, 200, 0), 50)
 
         self.values[o1] = 3;
         self.values[o2] = 4;

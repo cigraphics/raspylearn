@@ -68,15 +68,25 @@ class MainWindow(QtGui.QMainWindow):
         hbox.addWidget(self.draw)
         hbox.addWidget(self.editor)
 
-        self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
-        self.draw.add_object(Elipse(10, 50, 90, 90, (0, 200, 0)))
-        self.draw.add_object(Image(10, 100, 90, 110, "images/rasp_logo.png"))
+        grid = Grid(6, 4, 400, 600)
 
-        li = [Image(0, 200, 90, 110, "images/rasp_logo.png") for i in range(15)]
-        place_object_list(li, 400)
+        self.draw.add_object(Elipse(grid, 0, 0, (0, 200, 0), 50))
+        self.draw.add_object(Elipse(grid, 0, 1, (0, 200, 0), 10))
+        self.draw.add_object(Elipse(grid, 1, 0, (0, 200, 0), 50))
+        self.draw.add_object(Elipse(grid, 1, 1, (0, 200, 0), 10))
 
-        for obj in li:
-            self.draw.add_object(obj)
+        self.draw.add_object(Image(grid, 0, 2, "images/rasp_logo.png", 70, 0.8))
+        self.draw.add_object(Image(grid, 1, 2, "images/rasp_logo.png", 70, 0.8))
+        self.draw.add_object(Image(grid, 0, 3, "images/rasp_logo.png", 70, 0.8))
+        self.draw.add_object(Image(grid, 1, 3, "images/rasp_logo.png", 70, 0.8))
+
+        self.draw.add_object(Image(grid, 2, 0, "images/tree.png", 100, 0.8))
+        self.draw.add_object(Image(grid, 2, 1, "images/tree.png", 100, 0.8))
+        self.draw.add_object(Image(grid, 3, 0, "images/tree.png", 100, 0.8))
+        self.draw.add_object(Image(grid, 3, 1, "images/tree.png", 100, 0.8))
+
+        self.draw.add_object(Rect(grid, 4, 0, (0, 200, 0), 50))
+        self.draw.add_object(Rect(grid, 4, 1, (0, 200, 0), 50))
 
         level = MinNumber(self.draw, self.editor)
         self.editor.on_execute.connect(self.start_level)

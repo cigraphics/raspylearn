@@ -20,4 +20,15 @@ class Rect(Drawable):
         self.qp.setBrush(QtGui.QColor(*self.color))
         self.qp.drawRect(self.x, self.y, self.width, self.height)
 
+class Circle(Drawable):
+    def __init__(self, x, y, r, color):
+        super(Circle, self).__init__()
+        self.x = x
+        self.y = y
+        self.r = r
+        self.color = color
+
+    def draw(self):
+        self.qp.setBrush(QtGui.QColor(*self.color))
+        self.qp.drawEllipse(self.x, self.y, self.r, self.r)
 

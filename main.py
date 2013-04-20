@@ -2,7 +2,7 @@
 
 import sys
 from PyQt4 import QtGui, QtCore
-from widgets import Rect
+from widgets import *
 from highlight import PythonHighlighter
 
 class MainWindow(QtGui.QMainWindow):
@@ -35,6 +35,7 @@ class MainWindow(QtGui.QMainWindow):
         hbox.addWidget(text_area_container)
 
         self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
+        self.draw.add_object(Circle(50, 50, 90, (0, 200, 0)))
 
         self.setCentralWidget(self.central_widget)
         self.show()

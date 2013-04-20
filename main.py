@@ -36,6 +36,7 @@ class MainWindow(QtGui.QMainWindow):
 
         self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
         self.draw.add_object(Circle(50, 50, 90, (0, 200, 0)))
+        self.draw.add_object(Image(100, 100, 90, 110, "images/rasp_logo.png"))
 
         self.setCentralWidget(self.central_widget)
         self.show()

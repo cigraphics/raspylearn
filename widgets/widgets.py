@@ -32,3 +32,19 @@ class Circle(Drawable):
         self.qp.setBrush(QtGui.QColor(*self.color))
         self.qp.drawEllipse(self.x, self.y, self.r, self.r)
 
+class Image(Drawable):
+    def __init__(self, x, y, width, height, image_path):
+        super(Image, self).__init__()
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.image_path = image_path
+
+    def draw(self):
+        image = QtGui.QImage(self.image_path)
+        rect = QtCore.QRect(self.x, self.y, self.width, self.height)
+        self.qp.drawImage(rect, image)
+        pass
+
+

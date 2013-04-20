@@ -40,6 +40,9 @@ class DrawArea(QtGui.QWidget):
     def add_object(self, obj):
         self.objects.append(obj)
 
+    def clear(self):
+        self.objects = []
+
     def paintEvent(self, e):
         for o in self.objects:
             o.qp.begin(self)

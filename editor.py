@@ -3,6 +3,8 @@ from PyQt4 import QtGui, QtCore
 import sys
 
 class Editor(QtGui.QWidget):
+    on_execute = QtCore.pyqtSignal(dict)
+
     def __init__(self):
         super(Editor, self).__init__()
 
@@ -18,7 +20,6 @@ class Editor(QtGui.QWidget):
         self.layout().addWidget(self.text_area)
         self.layout().addWidget(button)
 
-        self.on_execute = QtCore.pyqtSignal(object)
 
         # connect run button
         button.clicked.connect(self.runPressed)

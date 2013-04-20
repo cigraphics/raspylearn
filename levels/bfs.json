@@ -1,0 +1,8 @@
+{
+    "0": "none",
+    "1": "images/bear.png",
+    "2": "images/rasp_logo.png",
+    "3": "images/tree.png",
+    "matrix": [[0, 1, 2, 3],
+               [0, 0, 0, 0]]
+}

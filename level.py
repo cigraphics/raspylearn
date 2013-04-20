@@ -146,6 +146,7 @@ class BreadthFirstSearch(Level):
 
 
     def check(self):
+        self.objects[1 * 10 + 1].compute_position(1, 2)
         pass
 
 classes = [ MinNumber, MinNumberList, BreadthFirstSearch ]

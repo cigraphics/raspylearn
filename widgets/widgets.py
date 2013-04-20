@@ -29,25 +29,23 @@ class Object2D(Drawable):
     def __init__(self, grid, i, j, fill, ratio):
         super(Object2D, self).__init__()
         self.fill = fill
+        self.ratio = ratio
         self.grid = grid
         self.cell = grid.generic_cell
+        self.compute_position(i, j)
 
+    def compute_position(self, i, j):
         self.cell.x = (self.cell.width * j)
         self.cell.y = (self.cell.height * i)
 
-        self.width = (self.cell.width * fill * ratio) / 100
-        self.height = (self.cell.height * fill) / 100
+        self.width = (self.cell.width * self.fill * self.ratio) / 100
+        self.height = (self.cell.height * self.fill) / 100
 
         self.x = self.cell.x + (self.cell.width - self.width) / 2
         self.y = self.cell.y + (self.cell.height - self.height) / 2
 
-    def set_pos(self, x, y):
-        self.x = x
-        self.y = y
-
-    def set_dim(self, width, height):
-        self.width = width
-        self.height = height
+    def set_pos(self, i, j):
+        self.compute_position(i, j)
 
     def highlight_correct(self):
         raise NotImplementedError

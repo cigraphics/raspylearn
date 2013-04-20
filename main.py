@@ -2,14 +2,19 @@
 
 import sys
 from PyQt4 import QtGui, QtCore
+
 from widgets import *
 from editor import Editor
-from level import MinNumber
+import level
+import inspect
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self._setup()
+        # A dictionary with all levels mapped like
+        # { level_class_name : level_class }.
+        self.levels_dict = {}
 
         # Main widgets for window.
         self.initial_menu_widget = QtGui.QWidget()
@@ -22,37 +27,47 @@ class MainWindow(QtGui.QMainWindow):
     def _setup(self):
         self.setWindowTitle('RPI Learn you programming')
 
-    def get_levels(self):
-        """Get all level names available for one to play."""
-        return [('level1', 'desc1'), ('level2', 'desc2'), ('level3', 'desc2')]
+    def _get_all_classes(self, module):
+        """Get all classes within a module."""
+        classes = []
+        for name, obj in inspect.getmembers(module):
+            if inspect.isclass(obj):
+                classes.append(obj)
+        return classes
 
     def draw_initial_menu(self):
         self.setCentralWidget(self.initial_menu_widget)
 
         layout = QtGui.QVBoxLayout()
-        #layout.addStretch(1)
 
         # Draw initial choices for use to choose from.
-        for level, desc in self.get_levels():
+        for level_class in self._get_all_classes(level):
+            # Save the class instance by name.
+            level_name = level_class.__name__
+            level_desc = level_class.__doc__
+            self.levels_dict[level_name] = level_class
+
+            # Add button with name and description for each level.
             inside_layout = QtGui.QVBoxLayout()
-
-            button = QtGui.QPushButton(level)
-            button.clicked.connect(self.selectLevel)
+            button = QtGui.QPushButton(level_name)
+            button.clicked.connect(self.select_level)
             inside_layout.addWidget(button)
-            label = QtGui.QLabel(desc)
+            label = QtGui.QLabel(level_desc)
             inside_layout.addWidget(label)
-
             layout.addLayout(inside_layout)
 
         self.initial_menu_widget.setLayout(layout)
 
-    def selectLevel(self):
+    def select_level(self):
+        # Close initial menu widget, and show the selected level instead.
         self.initial_menu_widget.close()
-        self.draw_level()
-        sender = self.sender()
-        print(sender.text())
+        sender_name = str(self.sender().text())
+        # Get the level class which was selected by the user.
+        level_class = self.levels_dict.get(sender_name)
+        # Draw the selected level.
+        self.draw_level(level_class)
 
-    def draw_level(self):
+    def draw_level(self, level_class):
         self.setGeometry(300, 300, 800, 600)
         self.setCentralWidget(self.level_widget)
 
@@ -88,11 +103,14 @@ class MainWindow(QtGui.QMainWindow):
         self.draw.add_object(Rect(grid, 4, 0, (0, 200, 0), 50))
         self.draw.add_object(Rect(grid, 4, 1, (0, 200, 0), 50))
 
-        level = MinNumber(self.draw, self.editor)
+        # Save the level class (e.g. MinNumber class level)
+        # to use it to run the level selected by the user.
+        self.level_class = level_class
+        level = level_class(self.draw, self.editor)
         self.editor.on_execute.connect(self.start_level)
 
     def start_level(self, ns):
-        level = MinNumber(self.draw, self.editor, False)
+        level = self.level_class(self.draw, self.editor, False)
         level.set_method(ns[level.method_name])
         level.start()
 

@@ -45,6 +45,8 @@ class Level(Thread):
         self.draw_area.update()
 
 class MinNumber(Level):
+    """Find the minimum of two numbers."""
+
     method_name = "min"
     name = "MinNumber"
     skel = "skel/min.py"

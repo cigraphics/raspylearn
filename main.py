@@ -3,7 +3,7 @@
 import sys
 from PyQt4 import QtGui, QtCore
 from widgets import *
-from highlight import PythonHighlighter
+from editor import Editor
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -19,20 +19,10 @@ class MainWindow(QtGui.QMainWindow):
         self.draw = DrawArea()
 
         #text area container
-
-        text_area_container = QtGui.QWidget()
-        text_area_container.setLayout(QtGui.QVBoxLayout())
-
-        button = QtGui.QPushButton("Run")
-        text_area = QtGui.QPlainTextEdit()
-        PythonHighlighter(text_area.document())
-
-
-        text_area_container.layout().addWidget(text_area)
-        text_area_container.layout().addWidget(button)
+        editor = Editor()
 
         hbox.addWidget(self.draw)
-        hbox.addWidget(text_area_container)
+        hbox.addWidget(editor)
 
         self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
         self.draw.add_object(Circle(50, 50, 90, (0, 200, 0)))

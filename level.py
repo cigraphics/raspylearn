@@ -31,6 +31,8 @@ class Level(Thread):
         self.draw_area.update()
 
 class MinNumber(Level):
+    method_name = "min"
+    name = "MinNumber"
     def add_objects(self):
         self.values = {}
         o1 = Rect(100, 50, 200, 200, (0, 200, 100))

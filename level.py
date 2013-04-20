@@ -50,16 +50,17 @@ class MinNumber(Level):
     method_name = "min"
     name = "MinNumber"
     skel = "skel/min.py"
+
     def add_objects(self):
         self.values = {}
 
         grid = Grid(2, 1, 400, 600)
 
-        o1 = Rect(grid, 0, 0, (0, 200, 0), 50)
-        o2 = Rect(grid, 1, 0, (0, 200, 0), 50)
+        o1 = Image(grid, 0, 0, "images/rasp_logo.png", 30)
+        o2 = Image(grid, 1, 0, "images/rasp_logo.png", 70)
 
-        self.values[o1] = 3;
-        self.values[o2] = 4;
+        self.values[o1] = o1.fill;
+        self.values[o2] = o2.fill;
 
         self.objects.append(o1)
         self.objects.append(o2)
@@ -70,11 +71,10 @@ class MinNumber(Level):
     def check(self):
         x = self.method(self.values[self.objects[0]], self.values[self.objects[1]])
 
-        if x == 3:
-            self.objects[0].color = (0, 255, 0)
+        if x == 30:
+            self.objects[0].highlight_correct()
         else:
-            color = (255, 0, 0)
             for o in self.objects:
-                o.color = color
+                o.highlight_incorrect()
 
 classes = [ MinNumber ]

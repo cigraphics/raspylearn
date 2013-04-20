@@ -28,6 +28,7 @@ class Drawable(object):
 class Object2D(Drawable):
     def __init__(self, grid, i, j, fill, ratio):
         super(Object2D, self).__init__()
+        self.fill = fill
         self.grid = grid
         self.cell = grid.generic_cell
 
@@ -48,6 +49,12 @@ class Object2D(Drawable):
         self.width = width
         self.height = height
 
+    def highlight_correct(self):
+        raise NotImplementedError
+
+    def highlight_incorrect(self):
+        raise NotImplementedError
+
 class Rect(Object2D):
     def __init__(self, grid, i, j, color, fill, ratio = 1):
         super(Rect, self).__init__(grid, i, j, fill, ratio)
@@ -56,6 +63,13 @@ class Rect(Object2D):
     def draw(self):
         self.qp.setBrush(QtGui.QColor(*self.color))
         self.qp.drawRect(self.x, self.y, self.width, self.height)
+
+    def highlight_correct(self):
+        r, g, b = self.color
+        self.color = (min(r + 40, 255), min(g + 40, 255), min(b + 40, 255))
+
+    def highlight_incorrect(self):
+        self.color = (255, 0, 0)
 
 class Elipse(Object2D):
     def __init__(self, grid, i, j, color, fill, ratio = 1):
@@ -66,6 +80,13 @@ class Elipse(Object2D):
         self.qp.setBrush(QtGui.QColor(*self.color))
         self.qp.drawEllipse(self.x, self.y, self.width, self.height)
 
+    def highlight_correct(self):
+        r, g, b = self.color
+        self.color = (min(r + 40, 255), min(g + 40, 255), min(b + 40, 255))
+
+    def highlight_incorrect(self):
+        self.color = (255, 0, 0)
+
 class Image(Object2D):
     def __init__(self, grid, i, j, image_path, fill, ratio = 1):
         super(Image, self).__init__(grid, i, j, fill, ratio)
@@ -75,3 +96,9 @@ class Image(Object2D):
         image = QtGui.QImage(self.image_path)
         rect = QtCore.QRect(self.x, self.y, self.width, self.height)
         self.qp.drawImage(rect, image)
+
+    def highlight_correct(self):
+        self.image_path = "images/correct.png"
+
+    def highlight_incorrect(self):
+        self.image_path = "images/incorrect.png"

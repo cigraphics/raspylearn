@@ -21,9 +21,9 @@ class Level(Thread):
         self.signal_handler.on_exception_raised.connect(editor.console_write,\
                             Qt.QueuedConnection)
 
-    #Ugly callback so connect will work
-    def reload():
-        self.load_skel()
+        #Ugly callback so connect will work
+        def reload():
+            self.load_skel()
 
         self.editor.reload_button.clicked.connect(reload)
 

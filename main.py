@@ -3,6 +3,7 @@
 import sys
 from PyQt4 import QtGui, QtCore
 from widgets import Rect
+from highlight import PythonHighlighter
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -24,6 +25,8 @@ class MainWindow(QtGui.QMainWindow):
 
         button = QtGui.QPushButton("Run")
         text_area = QtGui.QPlainTextEdit()
+        PythonHighlighter(text_area.document())
+
 
         text_area_container.layout().addWidget(text_area)
         text_area_container.layout().addWidget(button)

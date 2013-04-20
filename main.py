@@ -2,6 +2,7 @@
 
 import sys
 from PyQt4 import QtGui, QtCore
+from widgets import Rect
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -10,32 +11,38 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle('Brushes')
         self.central_widget = QtGui.QWidget()
 
-        hbox = QtGui.QHBoxLayout(self.central_widget)
+        hbox = QtGui.QHBoxLayout()
+        self.central_widget.setLayout(hbox)
 
         #draw area
-        draw = DrawArea(self.central_widget)
+        self.draw = DrawArea()
+        button = QtGui.QPushButton("Run")
+        text_area = QtGui.QPlainTextEdit()
 
-        button = QtGui.QPushButton("OK")
-
-        hbox.addWidget(draw)
+        hbox.addWidget(self.draw)
         hbox.addWidget(button)
+        hbox.addWidget(text_area)
+
+        self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
+        self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
 
         self.setCentralWidget(self.central_widget)
         self.show()
 
 class DrawArea(QtGui.QWidget):
+    def __init__(self):
+        super(DrawArea, self).__init__()
+        self.setMinimumSize(400, 600)
+        self.objects = []
+
+    def add_object(self, obj):
+        self.objects.append(obj)
+
     def paintEvent(self, e):
-        qp = QtGui.QPainter()
-        qp.begin(self)
-
-        brush = QtGui.QBrush(QtCore.Qt.SolidPattern)
-        qp.setBrush(brush)
-        qp.drawRect(10, 15, 90, 60)
-
-        qp.setBrush(QtGui.QColor(200, 0, 0))
-        qp.drawRect(30, 45, 90, 60)
-
-        qp.end()
+        for o in self.objects:
+            o.qp.begin(self)
+            o.draw()
+            o.qp.end()
 
 def main():
     app = QtGui.QApplication(sys.argv)

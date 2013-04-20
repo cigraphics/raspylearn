@@ -7,7 +7,7 @@ from widgets import Rect
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.setGeometry(300, 300, 355, 280)
+        self.setGeometry(300, 300, 800, 600)
         self.setWindowTitle('Brushes')
         self.central_widget = QtGui.QWidget()
 
@@ -16,14 +16,21 @@ class MainWindow(QtGui.QMainWindow):
 
         #draw area
         self.draw = DrawArea()
+
+        #text area container
+
+        text_area_container = QtGui.QWidget()
+        text_area_container.setLayout(QtGui.QVBoxLayout())
+
         button = QtGui.QPushButton("Run")
         text_area = QtGui.QPlainTextEdit()
 
-        hbox.addWidget(self.draw)
-        hbox.addWidget(button)
-        hbox.addWidget(text_area)
+        text_area_container.layout().addWidget(text_area)
+        text_area_container.layout().addWidget(button)
 
-        self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
+        hbox.addWidget(self.draw)
+        hbox.addWidget(text_area_container)
+
         self.draw.add_object(Rect(0, 0, 90, 90, (0, 200, 0)))
 
         self.setCentralWidget(self.central_widget)

@@ -59,7 +59,7 @@ class Editor(QWidget):
             QPlainTextEdit.keyPressEvent(self.text_area, event)
 
     def runPressed(self):
-        print "run pressed."
+        self.console_write("")
         text = str(self.text_area.toPlainText())
 
         namespace = {}

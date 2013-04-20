@@ -121,10 +121,10 @@ class MinNumberList(Level):
             for o in self.objects:
                 o.highlight_incorrect()
 
-class BreadthFirstSearch(Level):
+class BerrySearch(Level):
     """Find the minimum from a list of numbers."""
 
-    method_name = "bfs"
+    method_name = "next_move"
     name = "BreadthFirstSearch"
     skel = "skel/bfs.py"
 
@@ -132,6 +132,7 @@ class BreadthFirstSearch(Level):
         stuff = json.load(open("levels/bfs.json", "r"))
 
         matrix = stuff["matrix"]
+        self.matrix = matrix
 
         grid = Grid(len(matrix), len(matrix[0]), 500, 500)
 
@@ -143,10 +144,27 @@ class BreadthFirstSearch(Level):
                 obj = Image(grid, i, j, stuff[str(matrix[i][j])], 100, 0.8)
                 self.objects.append(obj)
                 self.draw_area.add_object(obj)
+                if (i, j) == (8, 8):
+                    self.rasp = obj
 
+        self.bear = self.objects[11]
 
     def check(self):
-        self.objects[1 * 10 + 1].compute_position(1, 2)
-        pass
+        while True:
+            x, y = self.method(self.matrix)
+            self.bear.compute_position(x, y)
 
-classes = [ MinNumber, MinNumberList, BreadthFirstSearch ]
+            if self.matrix[x][y] == 3:
+                self.bear.highlight_incorrect()
+                return
+
+            if (x, y) == (8, 8):
+                self.bear.highlight_correct()
+                self.rasp.highlight_correct()
+                return
+
+            self.draw_area.update()
+            time.sleep(.5)
+
+
+classes = [ MinNumber, MinNumberList, BerrySearch ]

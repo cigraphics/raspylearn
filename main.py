@@ -35,15 +35,16 @@ class MainWindow(QtGui.QMainWindow):
         for obj in li:
             self.draw.add_object(obj)
 
-        self.level = MinNumber(self.draw)
-        editor.on_execute.connect(self.start_level)
 
+        level = MinNumber(self.draw)
+        editor.on_execute.connect(self.start_level)
         self.setCentralWidget(self.central_widget)
         self.show()
 
     def start_level(self, ns):
-        self.level.set_method(ns[self.level.method_name])
-        self.level.start()
+        level = MinNumber(self.draw)
+        level.set_method(ns[level.method_name])
+        level.start()
 
 
 class DrawArea(QtGui.QWidget):

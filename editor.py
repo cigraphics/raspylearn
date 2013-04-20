@@ -29,6 +29,7 @@ class Editor(QWidget):
         vertical_stretch_console.setVerticalStretch(2)
         self.console_output.setSizePolicy(vertical_stretch_console)
         self.console_output.setMinimumHeight(60)
+        self.console_output.setReadOnly(True)
 
         PythonHighlighter(self.text_area.document())
         PythonHighlighter(self.console_output.document())

@@ -5,8 +5,14 @@
 </style>
 </head>
 <body>
-<h3>3. Depth-first search<h3>
+<h3>4. Depth-first search<h3>
 
 <p>Help Barry the bear find his raspberry.</p>
+<p>
+We suggest that you the <a href=http://en.wikipedia.org/wiki/Depth-first_search>Depth First Search</a>
+algorithm.
+
+Explore the free positions and mark the ones you passed and add them to the frontier.
+</p>
 </body>
 </html>

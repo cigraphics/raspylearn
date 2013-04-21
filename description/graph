@@ -1,1 +1,14 @@
-yolo
+<html>
+<head>
+<style>
+  p {font-size:80%}
+</style>
+</head>
+<body>
+<h3>6. Graph connected components<h3>
+
+<p>Write a function that returns a list of connected components</p>
+<p>In a graph, a connected component is a list of nodes in the graph that can be accessed from one to another.</p>
+
+</body>
+</html>

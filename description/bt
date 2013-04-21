@@ -1,1 +1,16 @@
-yolo
+<html>
+<head>
+<style>
+  p {font-size:80%}
+</style>
+</head>
+<body>
+<h3>5. Graph Traversal<h3>
+
+<p>Traverse all the raspberries in the graph.</p>
+<p>
+We suggest that you the <a href=http://en.wikipedia.org/wiki/Depth-first_search>Depth First Search</a>
+algorithm.
+</p>
+</body>
+</html>

@@ -1,1 +1,12 @@
-yolo
+<html>
+<head>
+<style>
+  p {font-size:80%}
+</style>
+</head>
+<body>
+<h3>3. Maximum number from a list <h3>
+
+<p>Write a function that finds the maximum number from the list.</p>
+</body>
+</html>

@@ -157,6 +157,7 @@ class Editor(QWidget):
         self.on_stop.emit()
 
     def run_pressed(self):
+        self.console_write("Running simulation..")
         text = str(self.text_area.toPlainText())
 
         namespace = {}

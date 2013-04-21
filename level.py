@@ -57,10 +57,16 @@ class Level(Thread):
 
     def run(self):
         self.draw_area.update()
+        retval = False
         try:
-            self.check()
+            retval = self.check()
         except Exception as e:
             self.signal_handler.on_exception_raised.emit(str(e))
+
+        if retval:
+            self.signal_handler.on_exception_raised.emit("Success!")
+        else:
+            self.signal_handler.on_exception_raised.emit("Test failed!")
 
         self.draw_area.update()
         time.sleep(1)
@@ -100,9 +106,11 @@ class MinNumber(Level):
         # We just happen to know the result.
         if x == 30:
             self.objects[0].highlight_correct()
+            return True
         else:
             for o in self.objects:
                 o.highlight_incorrect()
+            return False
 
 class MinNumberList(Level):
     """Find the minimum from a list of numbers!"""
@@ -131,9 +139,11 @@ class MinNumberList(Level):
         # Determine the min value of the list and check.
         if x == min(self.vals):
             self.objects[3].highlight_correct()
+            return True
         else:
             for o in self.objects:
                 o.highlight_incorrect()
+            return False
 
 class MaxNumberList(Level):
     """Find the maximum from a list of numbers!"""
@@ -162,9 +172,11 @@ class MaxNumberList(Level):
         # Determine the max value of the list and check.
         if x == max(self.vals):
             self.objects[1].highlight_correct()
+            return True
         else:
             for o in self.objects:
                 o.highlight_incorrect()
+            return False
 
 class BerrySearch(Level):
     """Help Barry the bear find the raspberry!"""
@@ -204,13 +216,13 @@ class BerrySearch(Level):
 
             if self.matrix[x][y] == 3:
                 self.bear.highlight_incorrect()
-                return
+                return False
 
             # Barry found the raspberry.
             if (x, y) == (8, 8):
                 self.bear.highlight_correct()
                 self.rasp.highlight_correct()
-                return
+                return True
 
             self.draw_area.update()
             time.sleep(.5)
@@ -273,11 +285,11 @@ class BinaryTree(Level):
         for i in traversal:
             if i < 0:
                 self.wrong_answer()
-                return
+                return False
 
             if i >= len(self.objects):
                 self.wrong_answer()
-                return
+                return False
 
             checked[i] = True
 
@@ -288,6 +300,8 @@ class BinaryTree(Level):
 
         if False in checked.values():
             self.wrong_answer()
+            return False
+        return True
 
 
 class Graph(Level):

@@ -6,6 +6,7 @@ import sys
 
 class Editor(QWidget):
     on_execute = pyqtSignal(dict)
+    on_stop = pyqtSignal()
 
     def __init__(self):
         super(Editor, self).__init__()
@@ -40,14 +41,24 @@ class Editor(QWidget):
         # buttons
         run_button = QPushButton("Run")
         self.reload_button = QPushButton("Reload")
+        stop_button = QPushButton("Stop")
+
+        button_container = QWidget()
+        button_container.setLayout(QHBoxLayout())
+        button_container.setStyleSheet("QWidget { padding: 0px; }")
+
+        button_container.layout().addWidget(run_button)
+        button_container.layout().addWidget(stop_button)
+        button_container.layout().addWidget(self.reload_button)
 
         self.layout().addWidget(label)
         self.layout().addWidget(self.text_splitter)
-        self.layout().addWidget(run_button)
-        self.layout().addWidget(self.reload_button)
+        self.layout().addWidget(button_container)
 
         # connect run button
-        run_button.clicked.connect(self.runPressed)
+        stop_button.clicked.connect(self.stop_pressed)
+        run_button.clicked.connect(self.run_pressed)
+
         self.text_area.keyPressEvent = self.key_press
 
     def key_press(self, event):
@@ -58,8 +69,10 @@ class Editor(QWidget):
         else:
             QPlainTextEdit.keyPressEvent(self.text_area, event)
 
-    def runPressed(self):
-        self.console_write("")
+    def stop_pressed(self):
+        self.on_stop.emit()
+
+    def run_pressed(self):
         text = str(self.text_area.toPlainText())
 
         namespace = {}

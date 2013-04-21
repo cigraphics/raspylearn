@@ -108,6 +108,10 @@ class MainWindow(QtGui.QMainWindow):
         self.level_class = level_class
         level = level_class(self.draw, self.editor)
         self.editor.on_execute.connect(self.start_level)
+        self.editor.on_stop.connect(self.load_level)
+
+    def load_level(self):
+        level = self.level_class(self.draw, self.editor, False)
 
     def start_level(self, ns):
         level = self.level_class(self.draw, self.editor, False)

@@ -166,5 +166,40 @@ class BerrySearch(Level):
             self.draw_area.update()
             time.sleep(.5)
 
+class BinaryTree(Level):
+    """ Binary Tree """
 
-classes = [ MinNumber, MinNumberList, BerrySearch ]
+    method_name = "binary_tree"
+    name = "BinaryTree"
+    skel = "skel/bt.py"
+
+    def add_objects(self):
+        stuff = json.load(open("levels/binary_tree.json", "r"))
+
+        connections = stuff["connections"]
+        matrix = stuff["matrix"]
+        self.matrix = matrix
+
+        grid = Grid(len(matrix), len(matrix[0]), 500, 500)
+        image = "images/rasp_logo.png"
+
+        for conn in connections:
+            obj = Connection(grid, conn[0][1], conn[0][0],
+                                   conn[1][1], conn[1][0])
+            self.objects.append(obj)
+            self.draw_area.add_object(obj)
+
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if (matrix[i][j] == 0):
+                    continue
+
+                obj = Image(grid, i, j, image, 80, 1)
+                self.objects.append(obj)
+                self.draw_area.add_object(obj)
+
+    def check(self):
+        pass
+
+
+classes = [ MinNumber, MinNumberList, BerrySearch, BinaryTree ]

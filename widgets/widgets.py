@@ -55,6 +55,25 @@ class Object2D(Drawable):
     def highlight_incorrect(self):
         raise NotImplementedError
 
+class Connection(Drawable):
+    def __init__(self, grid, i1, j1, i2, j2, color = (100, 100, 100)):
+        super(Connection, self).__init__()
+
+        self.grid = grid
+        self.cell = grid.generic_cell
+        self.color = color
+
+        self.x1 = i1 * self.cell.width + self.cell.width / 2
+        self.y1 = j1 * self.cell.height + self.cell.height / 2
+
+        self.x2 = i2 * self.cell.width + self.cell.width / 2
+        self.y2 = j2 * self.cell.height + self.cell.height / 2
+
+    def draw(self):
+        self.qp.setBrush(QtGui.QColor(*self.color))
+        self.qp.drawLine(self.x1, self.y1, self.x2, self.y2)
+
+
 class Rect(Object2D):
     def __init__(self, grid, i, j, color, fill, ratio = 1):
         super(Rect, self).__init__(grid, i, j, fill, ratio)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui, QtCore, Qt
 
 from widgets import *
 from editor import Editor
@@ -87,6 +87,22 @@ class MainWindow(QtGui.QMainWindow):
             255); border:1px solid rgb(255, 170, 255); }")
         draw_border.setSizePolicy(size_policy)
 
+        #separator
+        line = QtGui.QFrame(self);
+        line.setGeometry(Qt.QRect(320, 150, 118, 3));
+        line.setFrameShape(QtGui.QFrame.HLine);
+        line.setFrameShadow(QtGui.QFrame.Sunken);
+
+
+        # description
+        size_policy = QtGui.QSizePolicy()
+        size_policy.setHorizontalStretch(0)
+
+        self.description = QtGui.QTextEdit(self)
+        self.description.setMaximumWidth(524)
+        self.description.setSizePolicy(size_policy)
+        self.description.setReadOnly(True)
+
         #text area container
         self.editor = Editor()
 
@@ -100,8 +116,8 @@ class MainWindow(QtGui.QMainWindow):
         container.setLayout(QtGui.QVBoxLayout())
 
         container.layout().addWidget(draw_border)
-        # add a dummy widget to fill the empty space
-        container.layout().addWidget(QtGui.QWidget())
+        container.layout().addWidget(line)
+        container.layout().addWidget(self.description)
         container.layout().addWidget(back_button)
 
         hbox.addWidget(container)
@@ -118,6 +134,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def load_level(self):
         level = self.level_class(self.draw, self.editor, False)
+        self.description.setText(level.get_description())
 
     def start_level(self, ns):
         level = self.level_class(self.draw, self.editor, False)

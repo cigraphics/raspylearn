@@ -87,7 +87,9 @@ class MainWindow(QtGui.QMainWindow):
         self.editor = Editor()
 
         # Add a back button
-        back_button = QtGui.QPushButton("< Back", self)
+        back_button = QtGui.QPushButton("Back", self)
+        back_button.setIcon(QtGui.QIcon("images/back.png"))
+        back_button.setMaximumSize(100, 30)
         back_button.clicked.connect(self.draw_initial_menu)
 
         container = QtGui.QWidget()

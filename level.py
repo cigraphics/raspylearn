@@ -34,6 +34,13 @@ class Level(Thread):
         skel = open(self.skel, "r").read()
         self.editor.text_area.setPlainText(skel)
 
+    def get_description(self):
+        f = open(self.description, "r")
+        res = f.read()
+        # We should close more files..
+        f.close()
+        return f
+
     def init(self):
         self.draw_area.clear()
         self.objects = []
@@ -66,6 +73,7 @@ class MinNumber(Level):
     method_name = "min"
     name = "MinNumber"
     skel = "skel/min.py"
+    description = "description/min"
 
     def add_objects(self):
         self.values = {}
@@ -99,6 +107,7 @@ class MinNumberList(Level):
     method_name = "min_list"
     name = "MinNumberList"
     skel = "skel/min_list.py"
+    description = "description/min_list"
 
     def add_objects(self):
         grid = Grid(6, 5, 500, 500)
@@ -127,6 +136,7 @@ class BerrySearch(Level):
     method_name = "next_move"
     name = "BerrySearch"
     skel = "skel/dfs.py"
+    description = "description/dfs"
 
     def add_objects(self):
         stuff = json.load(open("levels/dfs.json", "r"))
@@ -172,6 +182,7 @@ class BinaryTree(Level):
     method_name = "tree_traversal"
     name = "BinaryTree"
     skel = "skel/bt.py"
+    description = "description/bt"
 
     def add_objects(self):
         stuff = json.load(open("levels/binary_tree.json", "r"))
@@ -243,6 +254,7 @@ class Graph(Level):
     method_name = "graph"
     name = "Graph"
     skel = "skel/graph.py"
+    description = "description/graph"
 
     def add_objects(self):
         stuff = json.load(open("levels/graph.json", "r"))

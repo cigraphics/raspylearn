@@ -89,14 +89,16 @@ class Image(Object2D):
     def __init__(self, grid, i, j, image_path, fill, ratio = 1):
         super(Image, self).__init__(grid, i, j, fill, ratio)
         self.image_path = image_path
+        self.image = QtGui.QImage(self.image_path)
 
     def draw(self):
-        image = QtGui.QImage(self.image_path)
         rect = QtCore.QRect(self.x, self.y, self.width, self.height)
-        self.qp.drawImage(rect, image)
+        self.qp.drawImage(rect, self.image)
 
     def highlight_correct(self):
         self.image_path = "images/correct.png"
+        self.image = QtGui.QImage(self.image_path)
 
     def highlight_incorrect(self):
         self.image_path = "images/incorrect.png"
+        self.image = QtGui.QImage(self.image_path)

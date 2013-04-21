@@ -217,9 +217,7 @@ class BinaryTree(Level):
 
         traversal = self.method(0, self.edges)
 
-        n = len(self.objects)
-
-        checked = {i: False for i in xrange(n)}
+        checked = {i: False for i in xrange(self.n)}
         for i in traversal:
             if i < 0:
                 self.wrong_answer()

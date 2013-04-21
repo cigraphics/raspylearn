@@ -72,12 +72,16 @@ class MainWindow(QtGui.QMainWindow):
         self.level_widget.setLayout(hbox)
 
         #draw area
+        size_policy = QtGui.QSizePolicy()
+        size_policy.setVerticalStretch(0)
+
         self.draw = DrawArea()
         draw_border = QtGui.QWidget(self)
         draw_border.setLayout(QtGui.QVBoxLayout())
         draw_border.layout().addWidget(self.draw)
         draw_border.setStyleSheet("QWidget { background-color: rgb(255, 255,\
             255); border:1px solid rgb(255, 170, 255); }")
+        draw_border.setSizePolicy(size_policy)
 
         #text area container
         self.editor = Editor()
@@ -90,6 +94,8 @@ class MainWindow(QtGui.QMainWindow):
         container.setLayout(QtGui.QVBoxLayout())
 
         container.layout().addWidget(draw_border)
+        # add a dummy widget to fill the empty space
+        container.layout().addWidget(QtGui.QWidget())
         container.layout().addWidget(back_button)
 
         hbox.addWidget(container)

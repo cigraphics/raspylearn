@@ -169,25 +169,20 @@ class BerrySearch(Level):
 class BinaryTree(Level):
     """ Binary Tree """
 
-    method_name = "binary_tree"
+    method_name = "tree_traversal"
     name = "BinaryTree"
     skel = "skel/bt.py"
 
     def add_objects(self):
         stuff = json.load(open("levels/binary_tree.json", "r"))
 
+        mapping = {}
         connections = stuff["connections"]
         matrix = stuff["matrix"]
         self.matrix = matrix
 
         grid = Grid(len(matrix), len(matrix[0]), 500, 500)
         image = "images/rasp_logo.png"
-
-        for conn in connections:
-            obj = Connection(grid, conn[0][1], conn[0][0],
-                                   conn[1][1], conn[1][0])
-            self.objects.append(obj)
-            self.draw_area.add_object(obj)
 
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
@@ -196,10 +191,33 @@ class BinaryTree(Level):
 
                 obj = Image(grid, i, j, image, 80, 1)
                 self.objects.append(obj)
-                self.draw_area.add_object(obj)
+
+                mapping[(i, j)] = len(self.objects) - 1
+        self.n = len(self.objects)
+
+        for conn in connections:
+            obj = Connection(grid, conn[0][1], conn[0][0],
+                                   conn[1][1], conn[1][0])
+            self.objects.append(obj)
+
+        for obj in reversed(self.objects):
+            self.draw_area.add_object(obj)
+
+        self.edges = []
+        for conn in connections:
+            self.edges.append((mapping[tuple(conn[0])],
+                               mapping[tuple(conn[1])]))
+
 
     def check(self):
-        pass
+
+        traversal = self.method(self.n, self.edges)
+
+
+        for i in traversal:
+            self.objects[i].highlight()
+            self.draw_area.update()
+            time.sleep(.5)
 
 
 classes = [ MinNumber, MinNumberList, BerrySearch, BinaryTree ]

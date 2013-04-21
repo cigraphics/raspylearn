@@ -1,2 +1,3 @@
 def min(a, b):
-    return a if a < b else b
+    #TODO return min
+    return None

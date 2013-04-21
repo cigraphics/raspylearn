@@ -2,8 +2,5 @@
 def max_list(li):
     m = -255
 
-    for elem in li:
-        if elem > m:
-            m = elem
-
+    #TODO return max from the list
     return m

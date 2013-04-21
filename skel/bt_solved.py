@@ -4,7 +4,11 @@ nodes = []
 def dfs(n, edges):
     global nodes
 
-    #TODO do a depth first search and add n to nodes
+    nodes.append(n)
+
+    for (u, v) in edges:
+        if u == n:
+            dfs(v, edges)
 
 def tree_traversal(n, edges):
     global nodes

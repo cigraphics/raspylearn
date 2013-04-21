@@ -1,6 +1,8 @@
 
 from PyQt4 import QtGui, QtCore
 
+images = {}
+
 class GridCell():
     def __init__(self, width, height, x = 0, y = 0):
         self.x = x
@@ -89,7 +91,12 @@ class Image(Object2D):
     def __init__(self, grid, i, j, image_path, fill, ratio = 1):
         super(Image, self).__init__(grid, i, j, fill, ratio)
         self.image_path = image_path
-        self.image = QtGui.QImage(self.image_path)
+
+        global images
+        if images.get(self.image_path, None) == None:
+            images[self.image_path] = QtGui.QImage(self.image_path)
+
+        self.image = images[self.image_path]
 
     def draw(self):
         rect = QtCore.QRect(self.x, self.y, self.width, self.height)

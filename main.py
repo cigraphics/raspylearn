@@ -44,12 +44,16 @@ class MainWindow(QtGui.QMainWindow):
             self.levels_dict[level_name] = level_class
 
             # Add button with name and description for each level.
-            inside_layout = QtGui.QVBoxLayout()
+            inside_layout = QtGui.QHBoxLayout()
             button = QtGui.QPushButton(level_name)
+            button.setMaximumSize(130, 30)
+            button.setMinimumSize(130, 30)
             button.clicked.connect(self.select_level)
-            inside_layout.addWidget(button)
             label = QtGui.QLabel(level_desc)
+            label.setStyleSheet("QWidget { background-color: rgb(255, 255,\
+                    255); margin-bottom: 10px;}")
             inside_layout.addWidget(label)
+            inside_layout.addWidget(button)
             layout.addLayout(inside_layout)
 
         self.initial_menu_widget.setLayout(layout)

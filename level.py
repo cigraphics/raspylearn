@@ -61,7 +61,7 @@ class Level(Thread):
         self.draw_area.update()
 
 class MinNumber(Level):
-    """Find the minimum of two numbers."""
+    """Find the minimum of two numbers!"""
 
     method_name = "min"
     name = "MinNumber"
@@ -94,7 +94,7 @@ class MinNumber(Level):
                 o.highlight_incorrect()
 
 class MinNumberList(Level):
-    """Find the minimum from a list of numbers."""
+    """Find the minimum from a list of numbers!"""
 
     method_name = "min_list"
     name = "MinNumberList"
@@ -122,7 +122,7 @@ class MinNumberList(Level):
                 o.highlight_incorrect()
 
 class BerrySearch(Level):
-    """Help Barry the bear find the raspberry."""
+    """Help Barry the bear find the raspberry!"""
 
     method_name = "next_move"
     name = "BerrySearch"
@@ -167,7 +167,7 @@ class BerrySearch(Level):
             time.sleep(.5)
 
 class BinaryTree(Level):
-    """ Binary Tree """
+    """Traverse a binary tree!"""
 
     method_name = "tree_traversal"
     name = "BinaryTree"

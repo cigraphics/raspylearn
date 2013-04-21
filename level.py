@@ -362,17 +362,25 @@ class Graph(Level):
         components = self.method(self.n, self.edges)
         count = 1
 
+        res = True
+
         # Check if the result is correct.
+        if len(components) != len(self.result.keys()):
+            res = False
+
+
         for c in components:
             if sorted(c) != sorted(self.result[len(c)]):
+                res = False
+                break
 
-                for i in range(self.n):
-                    self.objects[i].highlight_incorrect()
+        if res == False:
+            for i in range(self.n):
+                self.objects[i].highlight_incorrect()
 
-                self.draw_area.update()
-                time.sleep(1)
-
-                return False
+            self.draw_area.update()
+            time.sleep(1)
+            return res
 
         for c in components:
             # Mark each component by its number.

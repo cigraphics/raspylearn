@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-from PyQt4 import QtGui, QtCore, Qt
+from PyQt4 import QtGui, QtCore, Qt, QtWebKit
 
 from widgets import *
 from editor import Editor
@@ -98,10 +98,10 @@ class MainWindow(QtGui.QMainWindow):
         size_policy = QtGui.QSizePolicy()
         size_policy.setHorizontalStretch(0)
 
-        self.description = QtGui.QTextEdit(self)
+        self.description = QtWebKit.QWebView(self)
         self.description.setMaximumWidth(524)
+        self.description.setMaximumHeight(100)
         self.description.setSizePolicy(size_policy)
-        self.description.setReadOnly(True)
 
         #text area container
         self.editor = Editor()
@@ -132,9 +132,11 @@ class MainWindow(QtGui.QMainWindow):
         self.editor.on_execute.connect(self.start_level)
         self.editor.on_stop.connect(self.load_level)
 
+        # dafuq is this doing here
+        self.description.setHtml(level.get_description())
+
     def load_level(self):
         level = self.level_class(self.draw, self.editor, False)
-        self.description.setText(level.get_description())
 
     def start_level(self, ns):
         level = self.level_class(self.draw, self.editor, False)

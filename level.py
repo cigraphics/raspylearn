@@ -39,7 +39,7 @@ class Level(Thread):
         res = f.read()
         # We should close more files..
         f.close()
-        return f
+        return res
 
     def init(self):
         self.draw_area.clear()

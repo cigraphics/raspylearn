@@ -1,1 +1,12 @@
-yolo
+<html>
+<head>
+<style>
+  p {font-size:80%}
+</style>
+</head>
+<body>
+<h3>1. Minimum function <h3>
+
+<p>Write a function that returns the minimum of two numbers.</p>
+</body>
+</html>

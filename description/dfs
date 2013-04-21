@@ -1,1 +1,12 @@
-yolo
+<html>
+<head>
+<style>
+  p {font-size:80%}
+</style>
+</head>
+<body>
+<h3>3. Depth-first search<h3>
+
+<p>Help Barry the bear find his raspberry.</p>
+</body>
+</html>

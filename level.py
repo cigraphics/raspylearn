@@ -122,7 +122,7 @@ class MinNumberList(Level):
                 o.highlight_incorrect()
 
 class BerrySearch(Level):
-    """Find the minimum from a list of numbers."""
+    """Help Barry the bear find the raspberry."""
 
     method_name = "next_move"
     name = "BerrySearch"

@@ -130,6 +130,35 @@ class MinNumberList(Level):
             for o in self.objects:
                 o.highlight_incorrect()
 
+class MaxNumberList(Level):
+    """Find the maximum from a list of numbers!"""
+
+    method_name = "max_list"
+    name = "MaxNumberList"
+    skel = "skel/max_list.py"
+    description = "description/max_list"
+
+    def add_objects(self):
+        grid = Grid(6, 5, 500, 500)
+
+        self.vals = [4, 8, 6, 3, 5, 7]
+        images = ["images/rasp_logo.png"] * len(self.vals)
+
+        for i in range(len(self.vals)):
+            obj = Image(grid, i, 2, images[i], self.vals[i] * 10, 0.8)
+            self.objects.append(obj)
+            self.draw_area.add_object(obj)
+
+
+    def check(self):
+        x = self.method(self.vals)
+
+        if x == max(self.vals):
+            self.objects[1].highlight_correct()
+        else:
+            for o in self.objects:
+                o.highlight_incorrect()
+
 class BerrySearch(Level):
     """Help Barry the bear find the raspberry!"""
 
@@ -249,7 +278,7 @@ class BinaryTree(Level):
 
 
 class Graph(Level):
-    """ Graph """
+    """ Graph Stongly Connected Components """
 
     method_name = "graph"
     name = "Graph"
@@ -304,8 +333,8 @@ class Graph(Level):
             for i in c:
                 self.objects[i].set_image(img)
 
-            self.draw_area.update()
             time.sleep(1)
+            self.draw_area.update()
             count += 1
 
-classes = [ MinNumber, MinNumberList, BerrySearch, BinaryTree, Graph ]
+classes = [ MinNumber, MinNumberList, MaxNumberList, BerrySearch, BinaryTree, Graph ]

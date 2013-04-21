@@ -2,6 +2,7 @@
 nodes = []
 component = []
 
+# Get one component via DFS
 def dfs(n, edges):
     global nodes, component
 
@@ -12,6 +13,7 @@ def dfs(n, edges):
         if u == n and v not in nodes:
             dfs(v, edges)
 
+# Determine SCCs
 def graph(n, edges):
     global nodes, component
     res = []

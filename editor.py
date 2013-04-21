@@ -96,7 +96,7 @@ class Editor(QWidget):
 
         label = QLabel("Code:")
 
-        #textedit and console output
+        # Textedit and console output.
         self.text_splitter = QSplitter(self)
         self.text_splitter.setOrientation(2) # Qt.Vertical = 2.
 
@@ -119,7 +119,7 @@ class Editor(QWidget):
         self.text_splitter.addWidget(self.text_area)
         self.text_splitter.addWidget(self.console_output)
 
-        # buttons
+        # Buttons.
         run_button = QPushButton("Run")
         run_button.setIcon(QIcon("images/play.png"))
         self.reload_button = QPushButton("Reload")
@@ -139,7 +139,7 @@ class Editor(QWidget):
         self.layout().addWidget(self.text_splitter)
         self.layout().addWidget(button_container)
 
-        # connect run button
+        # Connect run button.
         stop_button.clicked.connect(self.stop_pressed)
         run_button.clicked.connect(self.run_pressed)
 

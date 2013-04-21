@@ -1,3 +1,8 @@
+
+# Imported from: http://diotavelli.net/PyQtWiki/Python%20syntax%20highlighting
+#
+# Licence: GPL
+
 # syntax.py
 
 import sys

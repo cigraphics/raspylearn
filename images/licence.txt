@@ -1,21 +1,31 @@
 
-
 File: rasp_logo.png
-
-Licence:
+Licence: Allowed to use
 Author:
-Source:
-
+Source: http://www.raspberrypi.org/
 
 File: tree.png
-
 Licence: CC, Attribution, Share Alike
 Author: Pedro1267
 Source: http://commons.wikimedia.org/wiki/File:Tree-256x256.png
-
 
 File: bear.png
 Licence: CC
 Author:
 Source:
 http://clipartist.net/svg/lemmling-cartoon-bear-christmas-xmas-stuffed-animal-art-christmas-clip-art-clipart-clipartist-net-commons-wikimedia-org-openclipart-org-scalable-vector-graphics-svg-xmas/
+
+Files: img*.png
+Licence: CC
+Author:
+Source: http://commons.wikimedia.org/
+
+Files: buttons
+Licence:
+Author:
+Source: http://images.google.com/
+
+Files: correct.png, incorrect.png
+Licence: CC
+Author: Home made
+Source: Home made

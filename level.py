@@ -209,12 +209,23 @@ class BinaryTree(Level):
                                mapping[tuple(conn[1])]))
 
 
+    def wrong_answer(self):
+        for o in self.objects:
+            o.highlight_incorrect()
+
     def check(self):
 
-        traversal = self.method(self.n, self.edges)
-
+        traversal = self.method(0, self.edges)
 
         for i in traversal:
+            if i < 0:
+                self.wrong_answer()
+                return
+
+            if i >= len(self.objects):
+                self.wrong_answer()
+                return
+
             self.objects[i].highlight()
             self.draw_area.update()
             time.sleep(.5)

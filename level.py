@@ -17,12 +17,12 @@ class Level(Thread):
         if load_skel:
             self.load_skel()
 
-        # can't inherit QWidget so hack this m0f0
+        # Can't inherit QWidget so hack this m0f0.
         self.signal_handler = self.SignalHandler()
         self.signal_handler.on_exception_raised.connect(editor.console_write,\
                             Qt.QueuedConnection)
 
-        #Ugly callback so connect will work
+        # Ugly callback so connect will work.
         def reload():
             self.load_skel()
 
@@ -37,7 +37,7 @@ class Level(Thread):
     def get_description(self):
         f = open(self.description, "r")
         res = f.read()
-        # We should close more files..
+        # We should close more files.
         f.close()
         return res
 
@@ -80,6 +80,7 @@ class MinNumber(Level):
 
         grid = Grid(2, 3, 500, 500)
 
+        # Generate the objects and use their dimensions as values.
         o1 = Image(grid, 0, 1, "images/rasp_logo.png", 30, 1.2)
         o2 = Image(grid, 1, 1, "images/rasp_logo.png", 70, 1.2)
 
@@ -93,8 +94,10 @@ class MinNumber(Level):
         self.draw_area.add_object(o2)
 
     def check(self):
-        x = self.method(self.values[self.objects[0]], self.values[self.objects[1]])
+        x = self.method(self.values[self.objects[0]],
+                        self.values[self.objects[1]])
 
+        # We just happen to know the result.
         if x == 30:
             self.objects[0].highlight_correct()
         else:
@@ -115,6 +118,7 @@ class MinNumberList(Level):
         self.vals = [4, 8, 6, 3, 5, 7]
         images = ["images/rasp_logo.png"] * len(self.vals)
 
+        # Use predifined values to determine objects' sizes.
         for i in range(len(self.vals)):
             obj = Image(grid, i, 2, images[i], self.vals[i] * 10, 0.8)
             self.objects.append(obj)
@@ -124,6 +128,7 @@ class MinNumberList(Level):
     def check(self):
         x = self.method(self.vals)
 
+        # Determine the min value of the list and check.
         if x == min(self.vals):
             self.objects[3].highlight_correct()
         else:
@@ -144,6 +149,7 @@ class MaxNumberList(Level):
         self.vals = [4, 8, 6, 3, 5, 7]
         images = ["images/rasp_logo.png"] * len(self.vals)
 
+        # Use predifined values to determine objects' sizes.
         for i in range(len(self.vals)):
             obj = Image(grid, i, 2, images[i], self.vals[i] * 10, 0.8)
             self.objects.append(obj)
@@ -153,6 +159,7 @@ class MaxNumberList(Level):
     def check(self):
         x = self.method(self.vals)
 
+        # Determine the max value of the list and check.
         if x == max(self.vals):
             self.objects[1].highlight_correct()
         else:
@@ -173,6 +180,7 @@ class BerrySearch(Level):
         matrix = stuff["matrix"]
         self.matrix = matrix
 
+        # Set the grid according to the matrix size.
         grid = Grid(len(matrix), len(matrix[0]), 500, 500)
 
         for i in range(len(matrix)):
@@ -180,6 +188,7 @@ class BerrySearch(Level):
                 if (matrix[i][j] == 0):
                     continue
 
+                # Create objects images for each used square.
                 obj = Image(grid, i, j, stuff[str(matrix[i][j])], 100, 0.8)
                 self.objects.append(obj)
                 self.draw_area.add_object(obj)
@@ -197,6 +206,7 @@ class BerrySearch(Level):
                 self.bear.highlight_incorrect()
                 return
 
+            # Barry found the raspberry.
             if (x, y) == (8, 8):
                 self.bear.highlight_correct()
                 self.rasp.highlight_correct()
@@ -224,6 +234,7 @@ class BinaryTree(Level):
         grid = Grid(len(matrix), len(matrix[0]), 500, 500)
         image = "images/rasp_logo.png"
 
+        # Create objects for the nodes in the graph.
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 if (matrix[i][j] == 0):
@@ -235,6 +246,7 @@ class BinaryTree(Level):
                 mapping[(i, j)] = len(self.objects) - 1
         self.n = len(self.objects)
 
+        # Create lines for the edges.
         for conn in connections:
             obj = Connection(grid, conn[0][1], conn[0][0],
                                    conn[1][1], conn[1][0])
@@ -269,6 +281,7 @@ class BinaryTree(Level):
 
             checked[i] = True
 
+            # Highlight objects in the transversal.
             self.objects[i].highlight()
             self.draw_area.update()
             time.sleep(.5)
@@ -296,6 +309,7 @@ class Graph(Level):
         grid = Grid(len(matrix), len(matrix[0]), 500, 500)
         image = "images/rasp_logo.png"
 
+        # Create objects for the nodes in the graph.
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 if (matrix[i][j] == 0):
@@ -307,6 +321,7 @@ class Graph(Level):
                 mapping[(i, j)] = len(self.objects) - 1
         self.n = len(self.objects)
 
+        # Create lines for the edges.
         for conn in connections:
             obj = Connection(grid, conn[0][1], conn[0][0],
                                    conn[1][1], conn[1][0])
@@ -315,6 +330,7 @@ class Graph(Level):
         for obj in reversed(self.objects):
             self.draw_area.add_object(obj)
 
+        # Save edges as tuples of indexes.
         self.edges = []
         for conn in connections:
             self.edges.append((mapping[tuple(conn[0])],
@@ -329,6 +345,7 @@ class Graph(Level):
         count = 1
 
         for c in components:
+            # Mark each component by its number.
             img = "images/img" + str(count) + ".png"
             for i in c:
                 self.objects[i].set_image(img)
@@ -337,4 +354,5 @@ class Graph(Level):
             self.draw_area.update()
             count += 1
 
-classes = [ MinNumber, MinNumberList, MaxNumberList, BerrySearch, BinaryTree, Graph ]
+classes = [ MinNumber, MinNumberList, MaxNumberList, BerrySearch,
+            BinaryTree, Graph ]

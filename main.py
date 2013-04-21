@@ -29,7 +29,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def draw_initial_menu(self):
         self.setMinimumSize(0, 0)
-        self.setGeometry(0, 0, 300, 400)
+        self.setGeometry(0, 0, 150, 200)
         self.initial_menu_widget = QtGui.QWidget(self)
 
         self.setCentralWidget(self.initial_menu_widget)

@@ -4,6 +4,79 @@ from PyQt4.QtGui import *
 
 import sys
 
+class LineNumberArea(QWidget):
+    def __init__(self, code_editor):
+        super(LineNumberArea, self).__init__(code_editor)
+        self.code_editor = code_editor
+
+    def sizeHint(self):
+        return QSize(self.code_editor.line_number_width(), 0)
+
+    def paintEvent(self, event):
+        self.code_editor.line_number_paint(event)
+
+class CodeEditor(QPlainTextEdit):
+    def __init__(self, parent):
+        super(CodeEditor, self).__init__(parent)
+        self.line_number = LineNumberArea(self)
+
+        self.blockCountChanged.connect(self.update_line_number_width)
+        self.updateRequest.connect(self.update_line_number)
+        self.cursorPositionChanged.connect(self.highlight_current_line)
+
+        self.update_line_number_width(0)
+        self.highlight_current_line()
+
+    def line_number_paint(self, event):
+        painter = QPainter(self.line_number)
+        painter.fillRect(event.rect(), Qt.lightGray)
+
+        block = self.firstVisibleBlock()
+        block_num = block.blockNumber()
+        top = self.blockBoundingGeometry(block).translated(self.contentOffset()).top()
+        bottom = top + self.blockBoundingRect(block).height()
+
+        while block.isValid() and top <= event.rect().bottom():
+            if block.isVisible() and bottom >= event.rect().top():
+                number = QString.number(block_num + 1)
+                painter.setPen(Qt.black)
+                painter.drawText(0, top, self.line_number.width(),\
+                    16, Qt.AlignRight, number)
+            block = block.next()
+            top = bottom
+            bottom = top + self.blockBoundingRect(block).height()
+            block_num = block_num + 1
+
+    def line_number_width(self):
+        digits = 1
+        mx = max(1, self.blockCount())
+        while mx >= 10:
+            mx = mx / 10
+            digits = digits + 1
+        space = 11 * digits
+        return space
+
+    def resizeEvent(self, event):
+        QPlainTextEdit.resizeEvent(self, event)
+        cr = self.contentsRect()
+        self.line_number.setGeometry(QRect(cr.left(), cr.top(),\
+            self.line_number_width(), cr.height()))
+
+    def update_line_number_width(self, size):
+        self.setViewportMargins(self.line_number_width(), 0, 0, 0);
+
+    def highlight_current_line(self):
+        pass
+
+    def update_line_number(self, rect, size):
+        if size:
+            self.line_number.scroll(0, size)
+        else:
+            self.line_number.update(0, rect.y(), self.line_number.width(),\
+                rect.height())
+        if rect.contains(self.viewport().rect()):
+            self.update_line_number_width(0)
+
 class Editor(QWidget):
     on_execute = pyqtSignal(dict)
     on_stop = pyqtSignal()
@@ -19,7 +92,7 @@ class Editor(QWidget):
         self.text_splitter = QSplitter(self)
         self.text_splitter.setOrientation(2) # Qt.Vertical = 2.
 
-        self.text_area = QPlainTextEdit(self.text_splitter)
+        self.text_area = CodeEditor(self.text_splitter)
         self.console_output = QPlainTextEdit(self.text_splitter)
 
         vertical_stretch = QSizePolicy()

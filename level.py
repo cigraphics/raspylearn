@@ -125,11 +125,11 @@ class BerrySearch(Level):
     """Find the minimum from a list of numbers."""
 
     method_name = "next_move"
-    name = "BreadthFirstSearch"
-    skel = "skel/bfs.py"
+    name = "BerrySearch"
+    skel = "skel/dfs.py"
 
     def add_objects(self):
-        stuff = json.load(open("levels/bfs.json", "r"))
+        stuff = json.load(open("levels/dfs.json", "r"))
 
         matrix = stuff["matrix"]
         self.matrix = matrix

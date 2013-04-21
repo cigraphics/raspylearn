@@ -66,7 +66,15 @@ class CodeEditor(QPlainTextEdit):
         self.setViewportMargins(self.line_number_width(), 0, 0, 0);
 
     def highlight_current_line(self):
-        pass
+        line_color = QColor(Qt.yellow).lighter(160)
+        selection = QTextEdit.ExtraSelection()
+
+        selection.format.setBackground(line_color)
+        selection.format.setProperty(QTextFormat.FullWidthSelection, True)
+        selection.cursor = self.textCursor()
+        selection.cursor.clearSelection()
+
+        self.setExtraSelections([selection])
 
     def update_line_number(self, rect, size):
         if size:

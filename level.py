@@ -217,6 +217,9 @@ class BinaryTree(Level):
 
         traversal = self.method(0, self.edges)
 
+        n = len(self.objects)
+
+        checked = {i: False for i in xrange(n)}
         for i in traversal:
             if i < 0:
                 self.wrong_answer()
@@ -226,9 +229,15 @@ class BinaryTree(Level):
                 self.wrong_answer()
                 return
 
+            checked[i] = True
+
             self.objects[i].highlight()
             self.draw_area.update()
             time.sleep(.5)
+
+        if False in checked.values():
+            self.wrong_answer()
+
 
 class Graph(Level):
     """ Graph """
@@ -275,11 +284,13 @@ class Graph(Level):
 
     def check(self):
 
-        traversal = self.method(self.n, self.edges)
+        components = self.method(self.n, self.edges)
 
-        for i in traversal:
-            self.objects[i].highlight()
+        for c in components:
+            for i in c:
+                self.objects[i].highlight()
+
             self.draw_area.update()
-            time.sleep(.5)
+            time.sleep(1)
 
 classes = [ MinNumber, MinNumberList, BerrySearch, BinaryTree, Graph ]

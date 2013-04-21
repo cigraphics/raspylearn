@@ -121,6 +121,10 @@ class Image(Object2D):
         rect = QtCore.QRect(self.x, self.y, self.width, self.height)
         self.qp.drawImage(rect, self.image)
 
+    def set_image(self, image_path):
+        self.image_path = image_path
+        self.image = QtGui.QImage(self.image_path)
+
     def highlight(self):
         self.image_path = "images/rasp_highlight.png"
         self.image = QtGui.QImage(self.image_path)

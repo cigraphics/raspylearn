@@ -1,19 +1,19 @@
 
 nodes = []
 
-def bfs(n, edges):
+def dfs(n, edges):
     global nodes
 
     nodes.append(n)
 
     for (u, v) in edges:
         if u == n:
-            tree_traversal(v, edges)
+            dfs(v, edges)
 
 def tree_traversal(n, edges):
     global nodes
     nodes.append(n)
 
-    bfs(n, edges)
+    dfs(n, edges)
 
     return nodes

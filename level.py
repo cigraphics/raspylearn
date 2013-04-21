@@ -290,17 +290,22 @@ class Graph(Level):
         for conn in connections:
             self.edges.append((mapping[tuple(conn[0])],
                                mapping[tuple(conn[1])]))
+            self.edges.append((mapping[tuple(conn[1])],
+                               mapping[tuple(conn[0])]))
 
 
     def check(self):
 
         components = self.method(self.n, self.edges)
+        count = 1
 
         for c in components:
+            img = "images/img" + str(count) + ".png"
             for i in c:
-                self.objects[i].highlight()
+                self.objects[i].set_image(img)
 
             self.draw_area.update()
             time.sleep(1)
+            count += 1
 
 classes = [ MinNumber, MinNumberList, BerrySearch, BinaryTree, Graph ]

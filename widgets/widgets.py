@@ -40,6 +40,8 @@ class Object2D(Drawable):
         self.cell.x = (self.cell.width * j)
         self.cell.y = (self.cell.height * i)
 
+        # Compute the actual dimensions of the object according to the fill
+        # percent and the width - height ratio
         self.width = (self.cell.width * self.fill * self.ratio) / 100
         self.height = (self.cell.height * self.fill) / 100
 
@@ -63,6 +65,8 @@ class Connection(Drawable):
         self.cell = grid.generic_cell
         self.color = color
 
+        # Compute the starting points of a connections. Those are in the midle
+        # of the cells.
         self.x1 = i1 * self.cell.width + self.cell.width / 2
         self.y1 = j1 * self.cell.height + self.cell.height / 2
 
@@ -111,6 +115,7 @@ class Image(Object2D):
         super(Image, self).__init__(grid, i, j, fill, ratio)
         self.image_path = image_path
 
+        # Use global images objects for less overhead.
         global images
         if images.get(self.image_path, None) == None:
             images[self.image_path] = QtGui.QImage(self.image_path)

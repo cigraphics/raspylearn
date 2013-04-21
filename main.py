@@ -73,6 +73,11 @@ class MainWindow(QtGui.QMainWindow):
 
         #draw area
         self.draw = DrawArea()
+        draw_border = QtGui.QWidget(self)
+        draw_border.setLayout(QtGui.QVBoxLayout())
+        draw_border.layout().addWidget(self.draw)
+        draw_border.setStyleSheet("QWidget { background-color: rgb(255, 255,\
+            255); border:1px solid rgb(255, 170, 255); }")
 
         #text area container
         self.editor = Editor()
@@ -84,7 +89,7 @@ class MainWindow(QtGui.QMainWindow):
         container = QtGui.QWidget()
         container.setLayout(QtGui.QVBoxLayout())
 
-        container.layout().addWidget(self.draw)
+        container.layout().addWidget(draw_border)
         container.layout().addWidget(back_button)
 
         hbox.addWidget(container)

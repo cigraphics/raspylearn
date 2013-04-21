@@ -21,7 +21,7 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
 
     def _setup(self):
-        self.setWindowTitle('RPI Learn you programming')
+        self.setWindowTitle('RasPyLearn')
 
     def _get_all_classes(self, module):
         """Get all classes within a module."""

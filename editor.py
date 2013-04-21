@@ -40,8 +40,11 @@ class Editor(QWidget):
 
         # buttons
         run_button = QPushButton("Run")
+        run_button.setIcon(QIcon("images/play.png"))
         self.reload_button = QPushButton("Reload")
+        self.reload_button.setIcon(QIcon("images/reload.png"))
         stop_button = QPushButton("Stop")
+        stop_button.setIcon(QIcon("images/stop.png"))
 
         button_container = QWidget()
         button_container.setLayout(QHBoxLayout())

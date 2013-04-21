@@ -306,6 +306,10 @@ class Graph(Level):
         matrix = stuff["matrix"]
         self.matrix = matrix
 
+        self.result = {}
+        for li in stuff["result"]:
+            self.result[len(li)] = li
+
         grid = Grid(len(matrix), len(matrix[0]), 500, 500)
         image = "images/rasp_logo.png"
 
@@ -344,6 +348,18 @@ class Graph(Level):
         components = self.method(self.n, self.edges)
         count = 1
 
+        # Check if the result is correct.
+        for c in components:
+            if sorted(c) != sorted(self.result[len(c)]):
+
+                for i in range(self.n):
+                    self.objects[i].highlight_incorrect()
+
+                self.draw_area.update()
+                time.sleep(1)
+
+                return False
+
         for c in components:
             # Mark each component by its number.
             img = "images/img" + str(count) + ".png"
@@ -353,6 +369,8 @@ class Graph(Level):
             time.sleep(1)
             self.draw_area.update()
             count += 1
+
+        return True
 
 classes = [ MinNumber, MinNumberList, MaxNumberList, BerrySearch,
             BinaryTree, Graph ]

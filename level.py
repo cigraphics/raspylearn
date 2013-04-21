@@ -301,7 +301,7 @@ class Graph(Level):
                 if (matrix[i][j] == 0):
                     continue
 
-                obj = Image(grid, i, j, image, 80, 1)
+                obj = Image(grid, i, j, image, 120, 1)
                 self.objects.append(obj)
 
                 mapping[(i, j)] = len(self.objects) - 1
